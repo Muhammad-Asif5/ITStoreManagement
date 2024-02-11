@@ -1,0 +1,46 @@
+﻿@model InventoryManagement.Models.viewModeInventory_Available
+@{ Layout = null; }
+
+@using (Html.BeginForm("AddOrEdit", "Inventory", FormMethod.Post,
+    new { enctype = "multipart/form-data", id = "myForm", @class = "form-horizontal", role = "form", autocomplete = "off" }))
+{
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Inventory_No, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Inventory_No, new { htmlAttributes = new { @class = "form-control", @required = "required", placeholder = "Enter Inventory No", data_plugin_maxlength = "data-plugin-maxlength", maxlength = "10" } })
+            @Html.ValidationMessageFor(model => model.Inventory_No, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.PID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("PID", (List<SelectListItem>)ViewBag.allProduct,
+                                                                                                          "--Select Product--", new { @class = "form-control chosen-select", @required = "required" })
+            @Html.ValidationMessageFor(model => model.PID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Placement, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Placement, new { htmlAttributes = new { @class = "form-control", @required = "required", placeholder = "Enter Placement", data_plugin_maxlength = "data-plugin-maxlength", maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.Placement, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.Status,
+                                                                                    new List<SelectListItem> {new SelectListItem { Value = "" , Text = "--Select Status--",Selected=true },
+                                            new SelectListItem { Value = "1" , Text = "Available" },
+                                            new SelectListItem { Value = "0" , Text = "Not Usable" }
+                                                                                                  },
+                                                                                                new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+<button type="submit" id="btnSave" class="btn btn-success">Add Inventory</button>
+<button type="submit" id="btnUpdate" class="btn btn-primary">Update Inventory</button>
+}

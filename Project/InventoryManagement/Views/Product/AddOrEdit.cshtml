@@ -1,0 +1,40 @@
+﻿@model InventoryManagement.Models.viewModeProduct
+@{ Layout = null; }
+
+@using (Html.BeginForm("AddOrEdit", "Product", FormMethod.Post,
+    new { enctype = "multipart/form-data", id = "myForm", @class = "form-horizontal", role = "form", autocomplete = "off" }))
+{
+<div class="row">
+    <div class="col-sm-6">
+        @Html.HiddenFor(x=>x.PID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cat_ID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("Cat_ID", (List<SelectListItem>)ViewBag.allCategories,
+                                                                                           "--Select Category--", new { @class = "form-control chosen-select", @required = "required" })
+            @Html.ValidationMessageFor(model => model.Cat_ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Model_Name, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Model_Name, new { htmlAttributes = new { @class = "form-control", @required = "required", placeholder = "Enter Model No", data_plugin_maxlength = "data-plugin-maxlength", maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.Model_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="col-sm-12">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.Status,
+                                                                     new List<SelectListItem> {new SelectListItem { Value = "" , Text = "--Select Status--",Selected=true },
+                                            new SelectListItem { Value = "1" , Text = "Active" },
+                                            new SelectListItem { Value = "0" , Text = "Close" }
+                                                                       },
+                                                                                 new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+<button type="submit" id="btnSave" class="btn btn-success">Add Product</button>
+<button type="submit" id="btnUpdate" class="btn btn-primary">Update Product</button>
+}

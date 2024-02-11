@@ -1,0 +1,47 @@
+﻿@model IEnumerable<InventoryManagement.Models.AllIssuedViewModels>
+
+@{
+    Layout = null;// "~/Views/Shared/_Layout.cshtml";
+}
+
+<table id="myTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th style="width:5%">Emp ID</th>
+            <th style="width:15%">Name</th>
+            <th style="width:15%">Dept Name</th>
+            <th style="width:10%">Created Date</th>
+            <th style="width:10%">Created By</th>
+            <th style="width:10%">Modified Date</th>
+            <th style="width:10%">Modified By</th>
+            <th style="width:10%">Status</th>
+            <th style="width:15%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int counter = 0;// Index start value
+            foreach (var item in Model)
+            {
+                <tr id="@item.Issued_ID">
+                    <td>@Html.DisplayFor(modelItem => item.Emp_ID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.EmpName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DeptName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Created_Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Created_By)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Modify_Date)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Modify_By)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                    <td>
+                        <a class="btn btn-outline-primary btn-sm" href="/Sales/SalesDetails?Issued_ID=@item.Issued_ID">Details</a>
+                        <button onclick="ViewReportData(this.id)" id="@item.Issued_ID" class="btn btn-outline-dark btn-sm">Report</button>
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+
+
+    </tbody>
+</table>
+

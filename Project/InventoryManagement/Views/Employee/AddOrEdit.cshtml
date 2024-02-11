@@ -1,0 +1,59 @@
+﻿@model InventoryManagement.Models.viewModeEmployee
+@{ Layout = null; }
+
+@using (Html.BeginForm("AddOrEdit", "Employee", FormMethod.Post,
+    new { enctype = "multipart/form-data", id = "myForm", @class = "form-horizontal", role = "form", autocomplete = "off" }))
+{
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Emp_ID, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Emp_ID, new { htmlAttributes = new { @class = "form-control", @type = "number", @required = "required", placeholder = "Enter Employee ID", data_plugin_maxlength = "data-plugin-maxlength", maxlength = "4" } })
+            @Html.ValidationMessageFor(model => model.Emp_ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required", placeholder = "Enter Employee Name", data_plugin_maxlength = "data-plugin-maxlength", maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Dept_ID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("Dept_ID", (List<SelectListItem>)ViewBag.allDepartments,
+                                                                                           "--Select Department--", new { @class = "form-control ", @required = "required" })
+            @Html.ValidationMessageFor(model => model.Dept_ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Designation_ID, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("Designation_ID", (List<SelectListItem>)ViewBag.allDesignations,
+                                                                                           "--Select Designation--", new { @class = "form-control chosen-select", @required = "required" })
+            @Html.ValidationMessageFor(model => model.Designation_ID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email", @required = "required", placeholder = "Enter Employee Email", data_plugin_maxlength = "data-plugin-maxlength", maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.Status,
+                                                                     new List<SelectListItem> {new SelectListItem { Value = "" , Text = "--Select Status--",Selected=true },
+                                            new SelectListItem { Value = "1" , Text = "Active" },
+                                            new SelectListItem { Value = "0" , Text = "Close" }
+                                                                       },
+                                                                                 new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+<button type="submit" id="btnSave" class="btn btn-success">Add Employee</button>
+<button type="submit" id="btnUpdate" class="btn btn-primary">Update Employee</button>}

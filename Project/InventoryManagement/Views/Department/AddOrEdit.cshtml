@@ -1,0 +1,20 @@
+﻿@model InventoryManagement.Models.viewModelDepartment
+@{ Layout = null; }
+
+@using (Html.BeginForm("AddOrEdit", "Department", FormMethod.Post,
+    new { enctype = "multipart/form-data", id = "myForm", @class = "form-horizontal", role = "form", autocomplete = "off" }))
+{
+<div class="row">
+    @Html.HiddenFor(x=>x.Dept_ID)
+    <div class="col-sm-12">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required", placeholder = "Enter Department Name", data_plugin_maxlength = "data-plugin-maxlength", maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+<button type="submit" id="btnSave" class="btn btn-success">Add Department</button>
+<button type="submit" id="btnUpdate" class="btn btn-primary">Update Department</button>
+
+}

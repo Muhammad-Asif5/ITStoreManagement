@@ -1,0 +1,70 @@
+﻿@model IEnumerable<InventoryManagement.Models.viewModelSales_Issue>
+
+@{
+    Layout = null;// "~/Views/Shared/_Layout.cshtml";
+}
+
+<table id="myTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th style="width:15%">Employee</th>
+            <th style="width:10%">Comments</th>
+
+            <th style="width:15%">Placement</th>
+            <th style="width:10%">Date</th>
+            <th style="width:5%">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+
+            <th style="width:25%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int counter = 0;// Index start value
+            foreach (var item in Model)
+            {
+                <tr id="@item.Issued_ID">
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.eName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placement)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created_Date)
+                    </td>
+                    <td>
+                        @if (item.Status == "0")
+                        {
+                            <label class="badge bg-danger">Closed</label>
+                        }
+                        @if (item.Status == "1")
+                        {
+                            <label class="badge bg-success">Active</label>
+                        }
+                        @if (item.Status == "2")
+                        {
+                            <label class="label label-success">On Leave</label>
+                        }
+                    </td>
+                    <td>
+                        <button id="@item.Issued_ID" class="btn  btn-outline-primary btn-sm">Return</button>
+                        <button onclick="GetSalesById(this.id)" id="@item.Issued_ID" class="btn btn-success btn-sm">Edit</button>
+                        <a class="btn btn-primary btn-sm" href="/Sales/SalesDetails?Issued_ID=@item.Issued_ID&EmpID=@item.eName">Details</a>
+                        <button onclick="ViewReportData(this.id)" id="@item.Issued_ID" class="btn btn-default btn-sm">Report</button>
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+
+
+    </tbody>
+</table>
+

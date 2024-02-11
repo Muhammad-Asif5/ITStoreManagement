@@ -1,0 +1,44 @@
+﻿@model IEnumerable<InventoryManagement.Models.viewModelDepartment>
+
+@{
+    Layout = null;// "~/Views/Shared/_Layout.cshtml";
+}
+
+<table id="myTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Dept_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int counter = 0;// Index start value
+            foreach (var item in Model)
+            {
+                <tr id="@item.Dept_ID">
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dept_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <button onclick="getDepartmentById(this.id)" id="@item.Dept_ID" class="btn btn-primary">Edit</button>
+                        <button onclick="deleteDepartmentById(this.id)" id="@item.Dept_ID" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+
+
+    </tbody>
+</table>
+

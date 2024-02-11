@@ -1,0 +1,64 @@
+﻿@model IEnumerable<InventoryManagement.Models.viewModeEmployee>
+
+@{
+    Layout = null;// "~/Views/Shared/_Layout.cshtml";
+}
+
+<table id="myTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int counter = 0;// Index start value
+            foreach (var item in Model)
+            {
+                <tr id="@item.Emp_ID">
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emp_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @if (item.Status == "0")
+                        {
+                            <label class="badge bg-danger">Closed</label>
+                        }
+                        @if (item.Status == "1")
+                        {
+                            <label class="badge bg-success">Active</label>
+                        }
+                        @if (item.Status == "2")
+                        {
+                            <label class="label label-success">On Leave</label>
+                        }
+                    </td>
+                    <td>
+                        <button onclick="GetEmployeeById(this.id)" id="@item.Emp_ID" class="btn btn-primary">Edit</button>
+                        <button onclick="deleteEmployeeById(this.id)" id="@item.Emp_ID" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+
+
+    </tbody>
+</table>
+

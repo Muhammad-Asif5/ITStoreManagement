@@ -1,0 +1,68 @@
+﻿@model IEnumerable<InventoryManagement.Models.viewModeInventory_Available>
+
+@{
+    Layout = null;// "~/Views/Shared/_Layout.cshtml";
+}
+
+<table id="myTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Inventory ID</th>
+            <th>Product Name</th>
+            <th>Placement</th>
+            <th>Status</th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int counter = 0;// Index start value
+            foreach (var item in Model)
+            {
+                <tr id="@item.Inventory_No">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Inventory_No)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Placement)
+                    </td>
+                    <td>
+                        @if (item.Status == "0")
+                        {
+                        <label class="badge bg-danger">Not Usable</label>
+                        }
+                        @if (item.Status == "1")
+                        {
+                    <label class="badge bg-success">Available</label>
+                        }
+                        @if (item.Status == "2")
+                        {
+                    <label class="badge bg-info" >Issued</label>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Status == "2")
+                        {
+                            <button disabled class="btn btn-primary">Edit</button>
+                            <button disabled class="btn btn-danger">Delete</button>
+                        }
+                        else
+                        {
+                            <button onclick="GetInventoryById(this.id)" id="@item.Inventory_No" class="btn btn-primary">Edit</button>
+                            <button onclick="deleteInventoryById(this.id)" id="@item.Inventory_No" class="btn btn-danger">Delete</button>
+                        }
+
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+
+
+    </tbody>
+</table>
+

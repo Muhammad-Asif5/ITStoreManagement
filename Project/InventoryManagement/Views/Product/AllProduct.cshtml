@@ -1,0 +1,74 @@
+﻿@model IEnumerable<InventoryManagement.Models.viewModeProduct>
+
+@{
+    Layout = null;// "~/Views/Shared/_Layout.cshtml";
+}
+
+<table id="myTable" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th style="width:10%">
+                @Html.DisplayNameFor(model => model.PID)
+            </th>
+            <th style="width:20%">
+                @Html.DisplayNameFor(model => model.CatName)
+            </th>
+            <th style="width:30%">
+                @Html.DisplayNameFor(model => model.Model_Name)
+            </th>
+            <th style="width:20%">
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th style="width:5%">
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+
+            <th style="width:15%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int counter = 0;// Index start value
+            foreach (var item in Model)
+            {
+                <tr id="@item.PID">
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CatName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Image)
+                    </td>
+                    <td>
+                        @if (item.Status == "0")
+                        {
+                            <label class="badge bg-danger">Closed</label>
+                        }
+                        @if (item.Status == "1")
+                        {
+                            <label class="badge bg-success">Active</label>
+                        }
+                        @if (item.Status == "2")
+                        {
+                            <label class="label label-success">On Leave</label>
+                        }
+                    </td>
+                    <td>
+                        <button onclick="GetProductById(this.id)" id="@item.PID" class="btn btn-primary">Edit</button>
+                        <button onclick="deleteProductById(this.id)" id="@item.PID" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+
+
+    </tbody>
+</table>
+

@@ -1,0 +1,706 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ITInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Cat_ID" />
+          </Key>
+          <Property Name="Cat_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Dept_ID" />
+          </Key>
+          <Property Name="Dept_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Designation">
+          <Key>
+            <PropertyRef Name="Designation_ID" />
+          </Key>
+          <Property Name="Designation_ID" Type="int" Nullable="false" />
+          <Property Name="Designation_Title" Type="varchar" MaxLength="100" />
+          <Property Name="desig_priority" Type="int" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Emp_ID" />
+          </Key>
+          <Property Name="Emp_ID" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Dept_ID" Type="int" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
+          <Property Name="Created_date" Type="datetime" />
+          <Property Name="Created_By" Type="varchar" MaxLength="50" />
+          <Property Name="Modified_By" Type="varchar" MaxLength="50" />
+          <Property Name="Modified_Date" Type="datetime" />
+          <Property Name="ResetCode" Type="varchar" MaxLength="100" />
+          <Property Name="Designation_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Inventory_Available">
+          <Key>
+            <PropertyRef Name="Inventory_No" />
+          </Key>
+          <Property Name="Inventory_No" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="PID" Type="int" />
+          <Property Name="Placement" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="int" Nullable="false" />
+          <Property Name="Cat_ID" Type="int" Nullable="false" />
+          <Property Name="Model_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Sales_Issue">
+          <Key>
+            <PropertyRef Name="Issued_ID" />
+          </Key>
+          <Property Name="Issued_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Emp_ID" Type="char" MaxLength="4" />
+          <Property Name="Comments" Type="varchar" MaxLength="100" />
+          <Property Name="Placement" Type="varchar" MaxLength="150" />
+          <Property Name="Created_Date" Type="datetime" />
+          <Property Name="Modify_Date" Type="datetime" />
+          <Property Name="Modify_By" Type="varchar" MaxLength="50" />
+          <Property Name="Created_By" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Sales_Issue_Details">
+          <Key>
+            <PropertyRef Name="Inventory_No" />
+            <PropertyRef Name="Issued_ID" />
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="Inventory_No" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Issued_ID" Type="int" Nullable="false" />
+          <Property Name="SerialNo" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="Issued_From" Type="varchar" MaxLength="150" />
+          <Property Name="Issued_By" Type="varchar" MaxLength="50" />
+          <Property Name="Issue_Type" Type="char" MaxLength="1" />
+          <Property Name="Issued_Date" Type="datetime" />
+          <Property Name="Comments" Type="varchar" MaxLength="100" />
+          <Property Name="Modify_Date" Type="datetime" />
+          <Property Name="Modify_By" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ITInventory.dbo.v_SalesDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="v_SalesDetails">
+          <Key>
+            <PropertyRef Name="Inventory_No" />
+            <PropertyRef Name="CatName" />
+            <PropertyRef Name="Model_Name" />
+            <PropertyRef Name="Issued_ID" />
+            <PropertyRef Name="DeptName" />
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Sales_IssueComments" Type="varchar" MaxLength="100" />
+          <Property Name="Placement" Type="varchar" MaxLength="150" />
+          <Property Name="Created_Date" Type="datetime" />
+          <Property Name="Sales_IssueStatus" Type="char" MaxLength="1" />
+          <Property Name="Inventory_No" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Issued_From" Type="varchar" MaxLength="150" />
+          <Property Name="Issued_By" Type="varchar" MaxLength="50" />
+          <Property Name="Issue_Type" Type="char" MaxLength="1" />
+          <Property Name="Issued_Date" Type="datetime" />
+          <Property Name="SalesDetailsStatus" Type="char" MaxLength="1" />
+          <Property Name="CatName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Model_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Issued_ID" Type="int" Nullable="false" />
+          <Property Name="DeptName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SerialNo" Type="int" Nullable="false" />
+          <Property Name="Sales_Issue_DetailsComments" Type="varchar" MaxLength="100" />
+          <Property Name="Modify_Date" Type="datetime" />
+          <Property Name="Modify_By" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="Designation_Title" Type="varchar" MaxLength="100" />
+          <Property Name="Designation_ID" Type="int" />
+          <Property Name="Emp_ID" Type="char" MaxLength="4" />
+        </EntityType>
+        <Association Name="FK_Employee_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Dept_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Dept_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Designation">
+          <End Role="Designation" Type="Self.Designation" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Designation">
+              <PropertyRef Name="Designation_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Designation_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Available_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Inventory_Available" Type="Self.Inventory_Available" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="Inventory_Available">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Products_Cat_ID">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Cat_ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Cat_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Sales_Details_Issued_ID1">
+          <End Role="Sales_Issue" Type="Self.Sales_Issue" Multiplicity="1" />
+          <End Role="Sales_Issue_Details" Type="Self.Sales_Issue_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales_Issue">
+              <PropertyRef Name="Issued_ID" />
+            </Principal>
+            <Dependent Role="Sales_Issue_Details">
+              <PropertyRef Name="Issued_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Issue_Details_Inventory_Available">
+          <End Role="Inventory_Available" Type="Self.Inventory_Available" Multiplicity="1" />
+          <End Role="Sales_Issue_Details" Type="Self.Sales_Issue_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory_Available">
+              <PropertyRef Name="Inventory_No" />
+            </Principal>
+            <Dependent Role="Sales_Issue_Details">
+              <PropertyRef Name="Inventory_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Issue_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Sales_Issue" Type="Self.Sales_Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Sales_Issue">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ITInventoryModelStoreContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory_Available" EntityType="Self.Inventory_Available" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales_Issue" EntityType="Self.Sales_Issue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales_Issue_Details" EntityType="Self.Sales_Issue_Details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="v_SalesDetails" EntityType="Self.v_SalesDetails" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [v_SalesDetails].[Name] AS [Name], 
+    [v_SalesDetails].[Sales_IssueComments] AS [Sales_IssueComments], 
+    [v_SalesDetails].[Placement] AS [Placement], 
+    [v_SalesDetails].[Created_Date] AS [Created_Date], 
+    [v_SalesDetails].[Sales_IssueStatus] AS [Sales_IssueStatus], 
+    [v_SalesDetails].[Inventory_No] AS [Inventory_No], 
+    [v_SalesDetails].[Issued_From] AS [Issued_From], 
+    [v_SalesDetails].[Issued_By] AS [Issued_By], 
+    [v_SalesDetails].[Issue_Type] AS [Issue_Type], 
+    [v_SalesDetails].[Issued_Date] AS [Issued_Date], 
+    [v_SalesDetails].[SalesDetailsStatus] AS [SalesDetailsStatus], 
+    [v_SalesDetails].[CatName] AS [CatName], 
+    [v_SalesDetails].[Model_Name] AS [Model_Name], 
+    [v_SalesDetails].[Issued_ID] AS [Issued_ID], 
+    [v_SalesDetails].[DeptName] AS [DeptName], 
+    [v_SalesDetails].[SerialNo] AS [SerialNo], 
+    [v_SalesDetails].[Sales_Issue_DetailsComments] AS [Sales_Issue_DetailsComments], 
+    [v_SalesDetails].[Modify_Date] AS [Modify_Date], 
+    [v_SalesDetails].[Modify_By] AS [Modify_By], 
+    [v_SalesDetails].[Description] AS [Description], 
+    [v_SalesDetails].[Designation_Title] AS [Designation_Title], 
+    [v_SalesDetails].[Designation_ID] AS [Designation_ID], 
+    [v_SalesDetails].[Emp_ID] AS [Emp_ID]
+    FROM [dbo].[v_SalesDetails] AS [v_SalesDetails]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Designation" Association="Self.FK_Employee_Designation">
+            <End Role="Designation" EntitySet="Designation" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Available_Products" Association="Self.FK_Inventory_Available_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Inventory_Available" EntitySet="Inventory_Available" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Products_Cat_ID" Association="Self.fk_Products_Cat_ID">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sales_Details_Issued_ID1" Association="Self.fk_Sales_Details_Issued_ID1">
+            <End Role="Sales_Issue" EntitySet="Sales_Issue" />
+            <End Role="Sales_Issue_Details" EntitySet="Sales_Issue_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Issue_Details_Inventory_Available" Association="Self.FK_Sales_Issue_Details_Inventory_Available">
+            <End Role="Inventory_Available" EntitySet="Inventory_Available" />
+            <End Role="Sales_Issue_Details" EntitySet="Sales_Issue_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Issue_Employee" Association="Self.FK_Sales_Issue_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Sales_Issue" EntitySet="Sales_Issue" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ITInventoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="ITInventoryModel.Category" />
+          <EntitySet Name="Departments" EntityType="ITInventoryModel.Department" />
+          <EntitySet Name="Designations" EntityType="ITInventoryModel.Designation" />
+          <EntitySet Name="Employees" EntityType="ITInventoryModel.Employee" />
+          <EntitySet Name="Inventory_Available" EntityType="ITInventoryModel.Inventory_Available" />
+          <EntitySet Name="Products" EntityType="ITInventoryModel.Product" />
+          <EntitySet Name="Sales_Issue" EntityType="ITInventoryModel.Sales_Issue" />
+          <EntitySet Name="Sales_Issue_Details" EntityType="ITInventoryModel.Sales_Issue_Details" />
+          <EntitySet Name="v_SalesDetails" EntityType="ITInventoryModel.v_SalesDetails" />
+          <AssociationSet Name="fk_Products_Cat_ID" Association="ITInventoryModel.fk_Products_Cat_ID">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Department" Association="ITInventoryModel.FK_Employee_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Designation" Association="ITInventoryModel.FK_Employee_Designation">
+            <End Role="Designation" EntitySet="Designations" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Issue_Employee" Association="ITInventoryModel.FK_Sales_Issue_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Sales_Issue" EntitySet="Sales_Issue" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Available_Products" Association="ITInventoryModel.FK_Inventory_Available_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Inventory_Available" EntitySet="Inventory_Available" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_Issue_Details_Inventory_Available" Association="ITInventoryModel.FK_Sales_Issue_Details_Inventory_Available">
+            <End Role="Inventory_Available" EntitySet="Inventory_Available" />
+            <End Role="Sales_Issue_Details" EntitySet="Sales_Issue_Details" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Sales_Details_Issued_ID1" Association="ITInventoryModel.fk_Sales_Details_Issued_ID1">
+            <End Role="Sales_Issue" EntitySet="Sales_Issue" />
+            <End Role="Sales_Issue_Details" EntitySet="Sales_Issue_Details" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Cat_ID" />
+          </Key>
+          <Property Name="Cat_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="ITInventoryModel.fk_Products_Cat_ID" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Dept_ID" />
+          </Key>
+          <Property Name="Dept_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employees" Relationship="ITInventoryModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Designation">
+          <Key>
+            <PropertyRef Name="Designation_ID" />
+          </Key>
+          <Property Name="Designation_ID" Type="Int32" Nullable="false" />
+          <Property Name="Designation_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="desig_priority" Type="Int32" />
+          <NavigationProperty Name="Employees" Relationship="ITInventoryModel.FK_Employee_Designation" FromRole="Designation" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Emp_ID" />
+          </Key>
+          <Property Name="Emp_ID" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Dept_ID" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Created_date" Type="DateTime" Precision="3" />
+          <Property Name="Created_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modified_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modified_Date" Type="DateTime" Precision="3" />
+          <Property Name="ResetCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Designation_ID" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="ITInventoryModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Designation" Relationship="ITInventoryModel.FK_Employee_Designation" FromRole="Employee" ToRole="Designation" />
+          <NavigationProperty Name="Sales_Issue" Relationship="ITInventoryModel.FK_Sales_Issue_Employee" FromRole="Employee" ToRole="Sales_Issue" />
+        </EntityType>
+        <EntityType Name="Inventory_Available">
+          <Key>
+            <PropertyRef Name="Inventory_No" />
+          </Key>
+          <Property Name="Inventory_No" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="PID" Type="Int32" />
+          <Property Name="Placement" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Product" Relationship="ITInventoryModel.FK_Inventory_Available_Products" FromRole="Inventory_Available" ToRole="Product" />
+          <NavigationProperty Name="Sales_Issue_Details" Relationship="ITInventoryModel.FK_Sales_Issue_Details_Inventory_Available" FromRole="Inventory_Available" ToRole="Sales_Issue_Details" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="Cat_ID" Type="Int32" Nullable="false" />
+          <Property Name="Model_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Category" Relationship="ITInventoryModel.fk_Products_Cat_ID" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Inventory_Available" Relationship="ITInventoryModel.FK_Inventory_Available_Products" FromRole="Product" ToRole="Inventory_Available" />
+        </EntityType>
+        <EntityType Name="Sales_Issue">
+          <Key>
+            <PropertyRef Name="Issued_ID" />
+          </Key>
+          <Property Name="Issued_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Emp_ID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Placement" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Created_Date" Type="DateTime" Precision="3" />
+          <Property Name="Modify_Date" Type="DateTime" Precision="3" />
+          <Property Name="Modify_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Created_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Employee" Relationship="ITInventoryModel.FK_Sales_Issue_Employee" FromRole="Sales_Issue" ToRole="Employee" />
+          <NavigationProperty Name="Sales_Issue_Details" Relationship="ITInventoryModel.fk_Sales_Details_Issued_ID1" FromRole="Sales_Issue" ToRole="Sales_Issue_Details" />
+        </EntityType>
+        <EntityType Name="Sales_Issue_Details">
+          <Key>
+            <PropertyRef Name="Inventory_No" />
+            <PropertyRef Name="Issued_ID" />
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="Inventory_No" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Issued_ID" Type="Int32" Nullable="false" />
+          <Property Name="SerialNo" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Issued_From" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Issued_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Issue_Type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Issued_Date" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Modify_Date" Type="DateTime" Precision="3" />
+          <Property Name="Modify_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Inventory_Available" Relationship="ITInventoryModel.FK_Sales_Issue_Details_Inventory_Available" FromRole="Sales_Issue_Details" ToRole="Inventory_Available" />
+          <NavigationProperty Name="Sales_Issue" Relationship="ITInventoryModel.fk_Sales_Details_Issued_ID1" FromRole="Sales_Issue_Details" ToRole="Sales_Issue" />
+        </EntityType>
+        <EntityType Name="v_SalesDetails">
+          <Key>
+            <PropertyRef Name="Inventory_No" />
+            <PropertyRef Name="CatName" />
+            <PropertyRef Name="Model_Name" />
+            <PropertyRef Name="Issued_ID" />
+            <PropertyRef Name="DeptName" />
+            <PropertyRef Name="SerialNo" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sales_IssueComments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Placement" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Created_Date" Type="DateTime" Precision="3" />
+          <Property Name="Sales_IssueStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Inventory_No" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Issued_From" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Issued_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Issue_Type" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Issued_Date" Type="DateTime" Precision="3" />
+          <Property Name="SalesDetailsStatus" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CatName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Model_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Issued_ID" Type="Int32" Nullable="false" />
+          <Property Name="DeptName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SerialNo" Type="Int32" Nullable="false" />
+          <Property Name="Sales_Issue_DetailsComments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Modify_Date" Type="DateTime" Precision="3" />
+          <Property Name="Modify_By" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Designation_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Designation_ID" Type="Int32" />
+          <Property Name="Emp_ID" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <Association Name="fk_Products_Cat_ID">
+          <End Type="ITInventoryModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="ITInventoryModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Cat_ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Cat_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Department">
+          <End Type="ITInventoryModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="ITInventoryModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Dept_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Dept_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Designation">
+          <End Type="ITInventoryModel.Designation" Role="Designation" Multiplicity="0..1" />
+          <End Type="ITInventoryModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Designation">
+              <PropertyRef Name="Designation_ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Designation_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Issue_Employee">
+          <End Type="ITInventoryModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ITInventoryModel.Sales_Issue" Role="Sales_Issue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Emp_ID" />
+            </Principal>
+            <Dependent Role="Sales_Issue">
+              <PropertyRef Name="Emp_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Available_Products">
+          <End Type="ITInventoryModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="ITInventoryModel.Inventory_Available" Role="Inventory_Available" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="Inventory_Available">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_Issue_Details_Inventory_Available">
+          <End Type="ITInventoryModel.Inventory_Available" Role="Inventory_Available" Multiplicity="1" />
+          <End Type="ITInventoryModel.Sales_Issue_Details" Role="Sales_Issue_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory_Available">
+              <PropertyRef Name="Inventory_No" />
+            </Principal>
+            <Dependent Role="Sales_Issue_Details">
+              <PropertyRef Name="Inventory_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Sales_Details_Issued_ID1">
+          <End Type="ITInventoryModel.Sales_Issue" Role="Sales_Issue" Multiplicity="1" />
+          <End Type="ITInventoryModel.Sales_Issue_Details" Role="Sales_Issue_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales_Issue">
+              <PropertyRef Name="Issued_ID" />
+            </Principal>
+            <Dependent Role="Sales_Issue_Details">
+              <PropertyRef Name="Issued_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ITInventoryModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ITInventoryModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Cat_ID" ColumnName="Cat_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="ITInventoryModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Dept_ID" ColumnName="Dept_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Designations">
+            <EntityTypeMapping TypeName="ITInventoryModel.Designation">
+              <MappingFragment StoreEntitySet="Designation">
+                <ScalarProperty Name="desig_priority" ColumnName="desig_priority" />
+                <ScalarProperty Name="Designation_Title" ColumnName="Designation_Title" />
+                <ScalarProperty Name="Designation_ID" ColumnName="Designation_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ITInventoryModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Designation_ID" ColumnName="Designation_ID" />
+                <ScalarProperty Name="ResetCode" ColumnName="ResetCode" />
+                <ScalarProperty Name="Modified_Date" ColumnName="Modified_Date" />
+                <ScalarProperty Name="Modified_By" ColumnName="Modified_By" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="Created_date" ColumnName="Created_date" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Dept_ID" ColumnName="Dept_ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventory_Available">
+            <EntityTypeMapping TypeName="ITInventoryModel.Inventory_Available">
+              <MappingFragment StoreEntitySet="Inventory_Available">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Placement" ColumnName="Placement" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="Inventory_No" ColumnName="Inventory_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ITInventoryModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Model_Name" ColumnName="Model_Name" />
+                <ScalarProperty Name="Cat_ID" ColumnName="Cat_ID" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales_Issue">
+            <EntityTypeMapping TypeName="ITInventoryModel.Sales_Issue">
+              <MappingFragment StoreEntitySet="Sales_Issue">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Created_By" ColumnName="Created_By" />
+                <ScalarProperty Name="Modify_By" ColumnName="Modify_By" />
+                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
+                <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+                <ScalarProperty Name="Placement" ColumnName="Placement" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+                <ScalarProperty Name="Issued_ID" ColumnName="Issued_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales_Issue_Details">
+            <EntityTypeMapping TypeName="ITInventoryModel.Sales_Issue_Details">
+              <MappingFragment StoreEntitySet="Sales_Issue_Details">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Modify_By" ColumnName="Modify_By" />
+                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Issued_Date" ColumnName="Issued_Date" />
+                <ScalarProperty Name="Issue_Type" ColumnName="Issue_Type" />
+                <ScalarProperty Name="Issued_By" ColumnName="Issued_By" />
+                <ScalarProperty Name="Issued_From" ColumnName="Issued_From" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="Issued_ID" ColumnName="Issued_ID" />
+                <ScalarProperty Name="Inventory_No" ColumnName="Inventory_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_SalesDetails">
+            <EntityTypeMapping TypeName="ITInventoryModel.v_SalesDetails">
+              <MappingFragment StoreEntitySet="v_SalesDetails">
+                <ScalarProperty Name="Emp_ID" ColumnName="Emp_ID" />
+                <ScalarProperty Name="Designation_ID" ColumnName="Designation_ID" />
+                <ScalarProperty Name="Designation_Title" ColumnName="Designation_Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Modify_By" ColumnName="Modify_By" />
+                <ScalarProperty Name="Modify_Date" ColumnName="Modify_Date" />
+                <ScalarProperty Name="Sales_Issue_DetailsComments" ColumnName="Sales_Issue_DetailsComments" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+                <ScalarProperty Name="Issued_ID" ColumnName="Issued_ID" />
+                <ScalarProperty Name="Model_Name" ColumnName="Model_Name" />
+                <ScalarProperty Name="CatName" ColumnName="CatName" />
+                <ScalarProperty Name="SalesDetailsStatus" ColumnName="SalesDetailsStatus" />
+                <ScalarProperty Name="Issued_Date" ColumnName="Issued_Date" />
+                <ScalarProperty Name="Issue_Type" ColumnName="Issue_Type" />
+                <ScalarProperty Name="Issued_By" ColumnName="Issued_By" />
+                <ScalarProperty Name="Issued_From" ColumnName="Issued_From" />
+                <ScalarProperty Name="Inventory_No" ColumnName="Inventory_No" />
+                <ScalarProperty Name="Sales_IssueStatus" ColumnName="Sales_IssueStatus" />
+                <ScalarProperty Name="Created_Date" ColumnName="Created_Date" />
+                <ScalarProperty Name="Placement" ColumnName="Placement" />
+                <ScalarProperty Name="Sales_IssueComments" ColumnName="Sales_IssueComments" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

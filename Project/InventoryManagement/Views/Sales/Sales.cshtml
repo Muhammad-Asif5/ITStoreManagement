@@ -1,0 +1,631 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin3.cshtml";
+}
+
+<br />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <button type="button" class="btn btn-success" id="AddBtn">
+                        <i class="fas fa-plus"></i> Add new
+                    </button>
+                </h3>
+            </div>
+            <div class="card-body">
+                @Html.Action("AllSales")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="DepartmentModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Action("AddOrEdit")
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="receivedMpdal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/Sales/returnAllItems" autocomplete="off" class="form-horizontal" enctype="multipart/form-data" id="receivedForm" method="post" role="form" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input hidden id="IssueID" name="IssueID" value="0">
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="Comments">Comments</label>
+                                <textarea placeholder="Enter Comments" required="required" id="Comments" maxlength="100" name="Comments" data-plugin-maxlength="data-plugin-maxlength" class="form-control"></textarea>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Comments" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" id="btnReturn" class="btn btn-success">Return</button>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+<!-- /.modal -->
+@section Scripts{
+
+    <script>
+
+
+        function ViewReportData(id) {
+            //alert(id);
+            if (id != null) {
+
+                var url = "http://localhost:53243/Forms/IssuedReport.aspx?IssuedID=" + id;
+
+                //var windowName = "Change Logo";
+
+                var windowName = "_blank";
+                var windowHeight = window.innerHeight;
+                var windowWidth = window.innerWidth;
+                document.body.style.height = windowHeight + "px";
+                //window.addEventListener("resize", setWindowHeight, false);
+                newwindow = window.open(url, windowName, 'width=930,height=' + windowHeight + '');
+
+                if (window.focus) { newwindow.focus() }
+
+                return false;
+            } else {
+                toast("Please select a PO No first");
+            }
+        }
+
+
+
+
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+
+        $("#AddBtn").click(function () {
+            resetDatafromFrom();
+
+            $("#btnSave").show();
+            $("#btnUpdate").hide();
+
+            $(".modal-title").text("Add New Sales");
+            $("#DepartmentModal").modal('show');
+            $(".modal-header").removeClass('bg-primary');
+            $(".modal-header").addClass('bg-success');
+
+        });
+
+        $(".btn-outline-primary").click(function () {
+
+            $("#IssueID").val(this.id);
+            SerialNo = this.id.substring(10);
+            $(".modal-title").text("Received All Items");
+            $("#receivedMpdal").modal('show');
+            $(".modal-header").removeClass('bg-primary');
+            $(".modal-header").addClass('bg-success');
+
+        });
+
+        function GetSalesById(id) {
+            resetDatafromFrom();
+
+            $.ajax({
+                type: "POST",
+                url: "/Sales/GetSalesById",
+                data: { id: id },
+                success: function (data) {
+
+                    //$("#Emp_ID").prop('readonly', true);
+                    $("#Issued_ID").val(data[0].Issued_ID);
+                    $("#Placement").val(data[0].Placement);
+                    $("#Status").val(data[0].Status);
+                    $('select#Emp_ID').val(data[0].Emp_ID).trigger('change');
+
+                    $("#btnSave").hide();
+                    $("#btnUpdate").show();
+
+                    $(".modal-title").text("Update Sales");
+                    $("#DepartmentModal").modal('show');
+                    $(".modal-header").addClass('bg-primary');
+                    $(".modal-header").removeClass('bg-success');
+                }
+            });
+
+        }
+        function deleteSalesById(id) {
+            var table = $('#myTable').DataTable();
+
+            var rowData = table.row("#" + id).data();
+
+            var empId = rowData[0];
+            var ename = rowData[1];
+            var forAlert = empId + ", " + ename;
+
+            swal({
+                title: "Are you sure?",
+                text: "Your will not be able to recover " + forAlert + " Data!",
+                //text: forAlert,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                    function (isConfirm) {
+                        if (isConfirm) {
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Employee/DeleteEmployeeByID",
+                                data: { id: id },
+                                success: function (data) {
+
+                                    if (data.success) {
+
+                                        if (data.Delete == "Delete") {
+                                            var table = $('#myTable').DataTable();
+                                            index = table.row('#' + id);
+                                            var temp = table.row(index[0]).data();
+                                            table.row(index[0]).remove().draw();
+
+                                            $('.ui-pnotify').remove();
+                                            new PNotify({
+                                                title: 'DELETED!',
+                                                text: data.message,
+                                                type: 'error',
+                                                animation: 'slide',
+                                                delay: 3000,
+                                                top: "500px",
+                                                min_height: "16px",
+                                                animate_speed: 400,
+                                                text_escape: true,
+                                                //nonblock: {
+                                                //    nonblock: true,
+                                                //    nonblock_opacity: .1
+                                                //},
+                                                styling: 'bootstrap3',
+                                            });
+                                            swal("Deleted!", data.message, "success");
+                                            setTimeout(function () {
+                                                swal.close();
+                                            }, 1000);
+                                        } else {
+                                            swal("Error!", data.message, "error");
+                                        }
+
+
+                                    } else {
+                                        location.reload();
+
+                                        toastr.error(data.message, "Error",
+                                            options = {
+                                                "closeButton": true,
+                                                "debug": false,
+                                                "progressBar": true,
+                                                "preventDuplicates": true,
+                                                "positionClass": "toast-top-center",
+                                                "onclick": null,
+                                                "showDuration": "400",
+                                                "hideDuration": "1000",
+                                                "timeOut": "7000",
+                                                "extendedTimeOut": "1000",
+                                                "showEasing": "swing",
+                                                "hideEasing": "linear",
+                                                "showMethod": "fadeIn",
+                                                "hideMethod": "fadeOut"
+                                            });
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            swal("Cancelled", "Your file is safe :)", "error");
+                        }
+                    });
+
+        }
+        $("#btnUpdate").click(function (e) {
+
+            if ($("#myForm").valid()) {  //<<< I was missing this check
+                var oForm = document.forms["myForm"];
+                var a = $('#Emp_ID option:selected').text().substring(7);
+
+                var ajaxConfig = {
+                    type: "POST",
+                    url: oForm.action,
+                    data: new FormData(oForm),
+                    success: function (data) {
+                        if (data.success) {
+                            var table = $("#myTable").DataTable();
+
+                            $('#DepartmentModal').modal('hide');
+
+                            index = table.row('#' + oForm["Issued_ID"].value); //1234126
+                            var temp = table.row(index[0]).data();
+                            temp[0] = a;
+                            temp[2] = oForm["Placement"].value;
+
+                            if (oForm["Status"].value == "1") {
+                                temp[4] = '<label class="badge bg-success">Active</label>';
+                            }
+                            if (oForm["Status"].value == "0") {
+                                temp[4] = '<label class="badge bg-danger">Closed</label>';
+                            }
+
+                            table.row(index[0]).data(temp).draw();
+
+
+                            $('.ui-pnotify').remove();
+                            new PNotify({
+                                title: 'SUCCESS!',
+                                text: data.message,
+                                type: 'success',
+                                animation: 'slide',
+                                delay: 3000,
+                                top: "500px",
+                                min_height: "16px",
+                                animate_speed: 400,
+                                text_escape: true,
+                                //nonblock: {
+                                //    nonblock: true,
+                                //    nonblock_opacity: .1
+                                //},
+                                styling: 'bootstrap3',
+                            });
+                        }
+                        else {
+                            swal("Error!", data.message, "error");
+                        }
+                    }
+                }
+                if ($("form").attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false,
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+                return false;
+            }
+
+        });
+
+        $("#btnSave").click(function () {
+
+            var oForm = document.forms["myForm"];
+
+            if ($("#myForm").valid()) {  //<<< I was missing this check
+                var table = $("#myTable").DataTable();
+                var a = $('#Emp_ID option:selected').text().substring(7);
+
+                var ajaxConfig = {
+                    type: "POST",
+                    url: oForm.action,
+                    data: new FormData(oForm),
+                    success: function (data) {
+                        var cDate = ConvertToMonth(data.infoData.Created_Date);
+                        var Issued_ID = data.infoData.Issued_ID;
+                        if (data.success) {
+                            $('#DepartmentModal').modal('hide');
+                            if (oForm["Status"].value == "1") {
+                                var rowIndex = table.row.add([a, 'Comments', oForm["Placement"].value, cDate, '<label class="badge bg-success">Active</label>', '<button onclick="GetSalesById(this.id)" id="' + Issued_ID + '" class="btn btn-success">Edit</button> <a id="' + Issued_ID + '" class="btn btn-primary" href="/Sales/SalesDetails?Issued_ID=' + Issued_ID+'">Details</a> <button id="' + Issued_ID + '" class="btn btn-default" >Report</button>']).draw(false);
+                            }
+                            if (oForm["Status"].value == "0") {
+                                var rowIndex = table.row.add([a, 'Comments', oForm["Placement"].value, cDate, '<label class="badge bg-danger">Close</label>', '<button onclick="GetSalesById(this.id)" id="' + Issued_ID + '" class="btn btn-success">Edit</button> <a id="' + Issued_ID + '" class="btn btn-primary" href="/Sales/SalesDetails?Issued_ID=' + Issued_ID +'">Details</a> <button id="' + Issued_ID + '" class="btn btn-default" >Report</button>']).draw(false);
+                            }
+
+                            var row = $('#myTable').dataTable().fnGetNodes(rowIndex);
+                            $(row).attr('id', Issued_ID);
+
+                            $('.ui-pnotify').remove();
+                            new PNotify({
+                                title: 'SUCCESS!',
+                                text: data.message,
+                                type: 'success',
+                                animation: 'slide',
+                                delay: 3000,
+                                top: "500px",
+                                min_height: "16px",
+                                animate_speed: 400,
+                                text_escape: true,
+                                //nonblock: {
+                                //    nonblock: true,
+                                //    nonblock_opacity: .1
+                                //},
+                                styling: 'bootstrap3',
+                            });
+                        }
+                        else {
+                            swal("Error!", data.message, "error");
+                        }
+                    }
+                }
+                if ($("form").attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false,
+                    ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+                return false;
+            }
+        });
+
+         $("#btnReturn").click(function () {
+
+            var oForm = document.forms["receivedForm"];
+            if ($("#receivedForm").valid()) {  //<<< I was missing this check
+
+
+                var ajaxConfig = {
+                    type: "POST",
+                    url: oForm.action + "?IssueID=" + $("#IssueID").val() + "&Comments=" + $("#Comments").val() ,
+                    data: {},
+                    success: function (data) {
+
+                        var table = $("#myTable").DataTable();
+
+                        $('#receivedMpdal').modal('hide');
+
+                        index = table.row('#' + oForm["IssueID"].value); //1234126
+                        var temp = table.row(index[0]).data();
+
+                        temp[4] = '<label class="badge bg-danger">Closed</label>';
+                        temp[5] = '<button disabled class="btn btn-outline-primary btn-sm">Return</button> <button disabled class="btn btn-success btn-sm">Edit</button> <button disabled class="btn btn-danger btn-sm">Delete</button> <button onclick="ViewReportData(this.id)" id="' + oForm["IssueID"].value+'" class="btn btn-default btn-sm">Report</button>';
+
+                        table.row(index[0]).data(temp).draw();
+
+
+                        $('.ui-pnotify').remove();
+                        new PNotify({
+                            title: 'SUCCESS!',
+                            text: data.message,
+                            type: 'success',
+                            animation: 'slide',
+                            delay: 3000,
+                            top: "500px",
+                            min_height: "16px",
+                            animate_speed: 400,
+                            text_escape: true,
+                            //nonblock: {
+                            //    nonblock: true,
+                            //    nonblock_opacity: .1
+                            //},
+                            styling: 'bootstrap3',
+                        });
+                    }
+                }
+                if ($("form").attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false,
+                        ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+                return false;
+            }
+         });
+
+
+        function resetDatafromFrom() {
+           // $("#ImagePreview").attr('src', '/AdminAssets/dist/img/avatar5.png');//e.target.result);
+            //$("#Department_ID").prop('readonly', false);
+            $('select#Emp_ID').val("").trigger('change');
+            $("#myForm")[0].reset();
+            $(".form-control.is-invalid").removeClass('is-invalid');
+        }
+
+
+        function ConvertToMonth(value) {
+            if (value == null) {
+                return "";
+            }
+            else {
+                var monthNames = ["Jab", "Feb", "March", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                ];
+                var pattern = /Date\(([^)]+)\)/;
+                var results = pattern.exec(value);
+                var dt = new Date(parseFloat(results[1]));
+                var completedate = monthNames[dt.getMonth()];
+                return completedate = dt.getDay() + "/" + monthNames[dt.getMonth()] +"/"+ dt.getFullYear();
+
+            }
+        }
+
+        $(document).ready(function () {
+
+
+            $("#btnUpdate").hide();
+
+            $('#receivedForm').validate({
+                rules: {
+                    //Name: {
+                    //    required: true,
+                    //},
+                    //Email: {
+                    //    required: true,
+                    //    Email: true,
+                    //},
+                    //password: {
+                    //    required: true,
+                    //    minlength: 5
+                    //},
+                    //terms: {
+                    //    required: true
+                    //},
+                },
+                messages: {
+                    Emp_ID: {
+                        required: "Please Enter Employee ID"
+                    },
+                    Dept_ID: {
+                        required: "Select Department"
+                    },
+                    Name: {
+                        required: "Please Enter Employee Name"
+                    },
+                    Email: {
+                        required: "Please Enter Employee Email",
+                        Email: "Please Enter a Vaild Email Address"
+                    },
+
+                    //password: {
+                    //    required: "Please provide a password",
+                    //    minlength: "Your password must be at least 5 characters long"
+                    //},
+                    //terms: "Please accept our terms"
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+
+            $('#myForm').validate({
+                rules: {
+                    //Name: {
+                    //    required: true,
+                    //},
+                    //Email: {
+                    //    required: true,
+                    //    Email: true,
+                    //},
+                    //password: {
+                    //    required: true,
+                    //    minlength: 5
+                    //},
+                    //terms: {
+                    //    required: true
+                    //},
+                },
+                messages: {
+                    Emp_ID: {
+                        required: "Please Enter Employee ID"
+                    },
+                    Dept_ID: {
+                        required: "Select Department"
+                    },
+                    Name: {
+                        required: "Please Enter Employee Name"
+                    },
+                    Email: {
+                        required: "Please Enter Employee Email",
+                        Email: "Please Enter a Vaild Email Address"
+                    },
+
+                    //password: {
+                    //    required: "Please provide a password",
+                    //    minlength: "Your password must be at least 5 characters long"
+                    //},
+                    //terms: "Please accept our terms"
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+
+
+        $(function () {
+            $("#myTable").DataTable({
+                //"paging": false,
+                //searching: false,                   // for disable search box
+                select: {
+                    info: false
+                },
+
+                //"order": [0, "asc"],
+                // "orderable": false,
+                "columnDefs": [
+                   { "targets": [0, 2,5], "orderable": false }
+                ],
+                dom: 'lBfrtip',
+                language: {
+                    search: "", // for hide label of search
+                    searchPlaceholder: "Search Department", // place holder of search box
+                },
+                responsive: true,
+                //select: 'single',
+                select: true,                       // for Select Row
+                //bDestroy: true,                     // this will disable table when new load data
+                "bLengthChange": false,           //  for Show more Entries
+                //scrollY: '20vh',
+                "sScrollX": "100%",
+                "sScrollXInner": "100%",
+                "bScrollCollapse": true,
+                "processing": true,
+                //"bPaginate": false,
+                "sPaginationType": "full_numbers",
+                //"langauge": {
+                //    "QueryTable": "No data found, Please click on <b>Add New </b> Button"
+                //},
+                "oLanguage": {
+                    "sEmptyTable": "No data found, Please click on <b>Add New</b> Button"
+                }
+            });
+
+            $('input[type="search"]').addClass('form-control'); // <-- add this line
+
+            //$("#myTable").DataTable({
+            //    "responsive": true,
+            //    "autoWidth": false,
+            //});
+
+            //$('#example2').DataTable({
+            //    "paging": true,
+            //    "lengthChange": false,
+            //    "searching": false,
+            //    "ordering": true,
+            //    "info": true,
+            //    "autoWidth": false,
+            //    "responsive": true,
+            //});
+        });
+
+    </script>
+
+
+
+}

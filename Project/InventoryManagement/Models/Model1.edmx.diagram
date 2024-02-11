@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e641879dd1da4f2d8ec4d01bb08c8cb0" Name="Diagram1">
+        <EntityTypeShape EntityType="ITInventoryModel.Category" Width="1.5" PointX="0.75" PointY="8.875" />
+        <EntityTypeShape EntityType="ITInventoryModel.Department" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="ITInventoryModel.Designation" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ITInventoryModel.Employee" Width="1.5" PointX="3" PointY="2.625" />
+        <EntityTypeShape EntityType="ITInventoryModel.Inventory_Available" Width="1.5" PointX="5.25" PointY="8.5" />
+        <EntityTypeShape EntityType="ITInventoryModel.Product" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="ITInventoryModel.Sales_Issue" Width="1.5" PointX="5.25" PointY="3.125" />
+        <EntityTypeShape EntityType="ITInventoryModel.Sales_Issue_Details" Width="1.5" PointX="7.5" PointY="2.75" />
+        <EntityTypeShape EntityType="ITInventoryModel.v_SalesDetails" Width="1.5" PointX="7.75" PointY="7.375" />
+        <AssociationConnector Association="ITInventoryModel.fk_Products_Cat_ID" />
+        <AssociationConnector Association="ITInventoryModel.FK_Employee_Department" />
+        <AssociationConnector Association="ITInventoryModel.FK_Employee_Designation" />
+        <AssociationConnector Association="ITInventoryModel.FK_Sales_Issue_Employee" />
+        <AssociationConnector Association="ITInventoryModel.FK_Inventory_Available_Products" />
+        <AssociationConnector Association="ITInventoryModel.FK_Sales_Issue_Details_Inventory_Available" />
+        <AssociationConnector Association="ITInventoryModel.fk_Sales_Details_Issued_ID1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,776 @@
+﻿@model IEnumerable<InventoryManagement.Models.v_SalesDetails>
+
+@{
+    Layout = "~/Views/Shared/_Admin3.cshtml";
+}
+
+<br />
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <button type="button" class="btn btn-success" id="AddBtn">
+                        <i class="fas fa-plus"></i> Add new
+                    </button>
+                </h3>
+            </div>
+            <div class="card-body">
+                <h4 style="border-bottom:2px solid #ff6a00; text-align:center;">@Request.QueryString["EmpID"]</h4>
+                <table id="myTable" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">Product</th>
+                            <th style="width:15%">Inventory No</th>
+                            <th style="width:15%">Issued From</th>
+                            <th style="width:10%">Type</th>
+                            <th style="width:10%">Status</th>
+                            <th style="width:25%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int counter = 1;// Index start value
+                            foreach (var item in Model)
+                            {
+                                <tr id="@item.Inventory_No@item.SerialNo">
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CatName) @Html.DisplayFor(modelItem => item.Model_Name)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Inventory_No)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Issued_From)
+                                    </td>
+                                    <td>
+                                        @if (item.Issue_Type == "1")
+                                        {
+                                            <label class="badge bg-success">Permanent</label>
+                                        }
+                                        @if (item.Issue_Type == "0")
+                                        {
+                                            <label class="badge bg-warning">Temporary</label>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.SalesDetailsStatus == "Y")
+                                        {
+                                            <label class="badge bg-success">Issued</label>
+                                        }
+                                        @if (item.SalesDetailsStatus == "N")
+                                        {
+                                            <label class="badge bg-warning">Returned</label>
+                                        }
+                                    </td>
+                                    @if (item.SalesDetailsStatus == "N")
+                                    {
+                                        <td>
+                                            <button disabled class="btn  btn-outline-primary">Return</button>
+                                            <button disabled onclick="GetSalesDetailsById(this.id)" id="@item.Inventory_No@item.SerialNo" class="btn btn-success">Edit</button>
+                                            <button disabled onclick="DeleteSalesDetailsById(this.id)" id="@item.Inventory_No@item.SerialNo" class="btn btn-danger">Dalete</button>
+                                        </td>
+                                    }
+                                    @if (item.SalesDetailsStatus == "Y")
+                                    {
+                                        <td>
+                                            <button id="@item.Inventory_No@item.SerialNo" class="btn  btn-outline-primary">Return</button>
+                                            <button onclick="GetSalesDetailsById(this.id)" id="@item.Inventory_No@item.SerialNo" class="btn btn-success">Edit</button>
+                                            <button onclick="DeleteSalesDetailsById(this.id)" id="@item.Inventory_No@item.SerialNo" class="btn btn-danger">Dalete</button>
+                                        </td>
+                                    }
+
+
+                                </tr>
+                                counter++;
+                            }
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DepartmentModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/Sales/AddOrEditsalesDetails" autocomplete="off" class="form-horizontal" enctype="multipart/form-data" id="myForm" method="post" role="form" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input data-val="true" hidden data-val-number="The field IssuedID must be a number." id="IssuedID" name="IssuedID" value="0">
+                            <div class="form-group">
+                                <label class="control-label" for="Inventory_No">Select Item</label>
+                                <select id="Inventory_No" name="Inventory_No" class="form-control select2" required="required">
+                                    <option value="">--Select Item--</option>
+                                </select>
+                                @*@Html.DropDownList("Inventory_No", (List<SelectListItem>)ViewBag.allAvailableInventory,
+                                    "--Select Product--", new {@onchange="changeDDLFunction(this.id, this.value)", @class = "form-control select2", @required = "required" })*@
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Inventory_No" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="Description">Description</label>
+                                <textarea id="Description" maxlength="200" name="Description" placeholder="Enter Description Optional" class="form-control text-box single-line" data-plugin-maxlength="data-plugin-maxlength"></textarea>
+
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="Issued_From">Issued_From</label>
+                                <input class="form-control text-box single-line" data-plugin-maxlength="data-plugin-maxlength" id="Issued_From" maxlength="150" name="Issued_From" placeholder="Enter Issued_From" required="required" type="text" value="">
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Issued_From" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="Issue_Type">Issue_Type</label>
+                                <select class="form-control" id="Issue_Type" name="Issue_Type" required="required">
+                                    <option selected="selected" value="">--Select Issue_Type--</option>
+                                    <option value="1">Permanent</option>
+                                    <option value="0">Temporary</option>
+                                </select>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Issue_Type" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        @*<div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="Status">Status</label>
+                                    <select class="form-control" id="Status" name="Status" required="required">
+                                        <option selected="selected" value="">--Select Status--</option>
+                                        <option value="1">Permanent</option>
+                                        <option value="0">Temporary</option>
+                                    </select>
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Issue_Type" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>*@
+                    </div>
+                    <button type="submit" id="btnSave" class="btn btn-success">Add Sales</button>
+                    <button type="submit" id="btnUpdate" class="btn btn-primary" style="display: none;">Update Sales</button>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="receivedMpdal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/Sales/returnItems" autocomplete="off" class="form-horizontal" enctype="multipart/form-data" id="receivedForm" method="post" role="form" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input hidden data-val="true" id="InventroyNo" name="InventroyNo" value="0">
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="Comments">Comments</label>
+                                <textarea placeholder="Enter Comments" required="required" id="Comments" maxlength="100" name="Comments" data-plugin-maxlength="data-plugin-maxlength" class="form-control"></textarea>
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Comments" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" id="btnReturn" class="btn btn-success">Return</button>
+                </form>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+@section Scripts{
+
+    <script>
+
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+
+        var IssuedID= @Request.QueryString["Issued_ID"];
+        $("#IssuedID").val(IssuedID);
+
+
+        function DDLInventoryAvailable() {
+
+            var InvenID= $("#Inventory_No").val();
+            $.ajax({
+                type: "POST",
+                url: "/Sales/DDLInventoryAvailable",
+                data: { },
+                success: function (data) {
+
+                    $("#Inventory_No").html("");
+                    if (data.length != 0) {
+                        $("#Inventory_No").append($("<option></option>").val("").html("--Select Item--"));
+                        for (var i = 0; i < data.length; i++) {
+                            $("#Inventory_No").append($("<option></option>").val(data[i].Inventory_No).html(data[i].Name + " "+ data[i].Model_Name + " (" + data[i].Inventory_No+")"));
+                        }
+                    } else {
+                        $("#Inventory_No").append($("<option></option>").val(-1).html("--No Product Found--"));
+                        //$("#lblMessage").html("");
+                        //$("#lblMessage").append("<label class='label label-danger'>Please Set Marks Weightage Before Enter Marks</label>");
+
+                    }
+                }
+            })
+
+        }
+
+        //$(".btn-outline-primary").click(function () {
+        //    $(".modal-title").text("Assign New Items");
+        //    $("#receivedMpdal").modal('show');
+        //    $(".modal-header").removeClass('bg-primary');
+        //    $(".modal-header").addClass('bg-success');
+        //});
+
+        $("#AddBtn").click(function () {
+            resetDatafromFrom();
+            DDLInventoryAvailable();
+            $("#btnSave").show();
+            $("#btnUpdate").hide();
+
+            $(".modal-title").text("Assign New Items");
+            $("#DepartmentModal").modal('show');
+            $(".modal-header").removeClass('bg-primary');
+            $(".modal-header").addClass('bg-success');
+
+        });
+
+        $(".btn-outline-primary").click(function () {
+
+            $("#InventroyNo").val(this.id);
+            SerialNo = this.id.substring(10);
+            $(".modal-title").text("Received Item");
+            $("#receivedMpdal").modal('show');
+            $(".modal-header").removeClass('bg-primary');
+            $(".modal-header").addClass('bg-success');
+
+        });
+
+
+        var SerialNo = "";
+        function GetSalesDetailsById(id) {
+            resetDatafromFrom();
+            SerialNo = id.substring(10);
+
+            $.ajax({
+                type: "POST",
+                url: "/Sales/GetSalesDetailsById",
+                data: { id: id },
+                success: function (data) {
+
+                    $("#Inventory_No").html("");
+                    //$("#Inventory_No").prop('readonly', true);
+                    //$("#Inventory_No").val(data[0].Inventory_No);
+                    //$('select#Inventory_No').val(data[0].Inventory_No).trigger('change');
+                    //$("#Inventory_No").val(data[0].Inventory_No);
+                    $("#Inventory_No").append($("<option></option>").val(data[0].Inventory_No).html(data[0].Name + " " + data[0].Model_Name + " (" + data[0].Inventory_No + ")"));
+                    $("#Comments").val(data[0].Comments);
+                    $("#Issued_From").val(data[0].Issued_From);
+                    $("#Issue_Type").val(data[0].Issue_Type);
+                    $("#Description").val(data[0].Description);
+
+
+                    $("#btnSave").hide();
+                    $("#btnUpdate").show();
+
+                    $(".modal-title").text("Update Items");
+                    $("#DepartmentModal").modal('show');
+                    $(".modal-header").addClass('bg-primary');
+                    $(".modal-header").removeClass('bg-success');
+                }
+            });
+
+        }
+        function DeleteSalesDetailsById(id) {
+            var table = $('#myTable').DataTable();
+
+            var rowData = table.row("#" + id).data();
+
+            var empId = rowData[0];
+            var ename = rowData[1];
+            var forAlert = empId + ", " + ename;
+
+            swal({
+                title: "Are you sure?",
+                text: "Your will not be able to recover " + forAlert + " Data!",
+                //text: forAlert,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+                function (isConfirm) {
+                    if (isConfirm) {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Sales/DeleteSalesDetailsByID",
+                            data: { id: id },
+                            success: function (data) {
+
+                                if (data.success) {
+
+                                    if (data.Delete == "Delete") {
+                                        var table = $('#myTable').DataTable();
+                                        index = table.row('#' + id);
+                                        var temp = table.row(index[0]).data();
+                                        table.row(index[0]).remove().draw();
+
+                                        $('.ui-pnotify').remove();
+                                        new PNotify({
+                                            title: 'DELETED!',
+                                            text: data.message,
+                                            type: 'error',
+                                            animation: 'slide',
+                                            delay: 3000,
+                                            top: "500px",
+                                            min_height: "16px",
+                                            animate_speed: 400,
+                                            text_escape: true,
+                                            //nonblock: {
+                                            //    nonblock: true,
+                                            //    nonblock_opacity: .1
+                                            //},
+                                            styling: 'bootstrap3',
+                                        });
+                                        swal("Deleted!", data.message, "success");
+                                        setTimeout(function () {
+                                            swal.close();
+                                        }, 1000);
+                                    } else {
+                                        swal("Error!", data.message, "error");
+                                    }
+
+
+                                } else {
+                                    location.reload();
+
+                                    toastr.error(data.message, "Error",
+                                        options = {
+                                            "closeButton": true,
+                                            "debug": false,
+                                            "progressBar": true,
+                                            "preventDuplicates": true,
+                                            "positionClass": "toast-top-center",
+                                            "onclick": null,
+                                            "showDuration": "400",
+                                            "hideDuration": "1000",
+                                            "timeOut": "7000",
+                                            "extendedTimeOut": "1000",
+                                            "showEasing": "swing",
+                                            "hideEasing": "linear",
+                                            "showMethod": "fadeIn",
+                                            "hideMethod": "fadeOut"
+                                        });
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        swal("Cancelled", "Your file is safe :)", "error");
+                    }
+                });
+
+        }
+        $("#btnUpdate").click(function (e) {
+
+            if ($("#myForm").valid()) {  //<<< I was missing this check
+                var oForm = document.forms["myForm"];
+                var a = $('#Inventory_No option:selected').text();
+
+                var ajaxConfig = {
+                    type: "POST",
+                    url: oForm.action,
+                    data: new FormData(oForm),
+                    success: function (data) {
+                        if (data.success) {
+                            var table = $("#myTable").DataTable();
+
+                            $('#DepartmentModal').modal('hide');
+
+                            index = table.row('#' + oForm["Inventory_No"].value + SerialNo); //1234126
+                            var temp = table.row(index[0]).data();
+                            temp[1] = oForm["Inventory_No"].value;
+                            temp[2] = oForm["Issued_From"].value;
+                            if (oForm["Issue_Type"].value == "1") {
+                                temp[3] = '<label class="badge bg-success">Permanent</label>';
+                            }
+                            if (oForm["Issue_Type"].value == "0") {
+                                temp[3] = '<label class="badge bg-warning">Temporary</label>';
+                            }
+
+                            table.row(index[0]).data(temp).draw();
+
+
+                            $('.ui-pnotify').remove();
+                            new PNotify({
+                                title: 'SUCCESS!',
+                                text: data.message,
+                                type: 'success',
+                                animation: 'slide',
+                                delay: 3000,
+                                top: "500px",
+                                min_height: "16px",
+                                animate_speed: 400,
+                                text_escape: true,
+                                //nonblock: {
+                                //    nonblock: true,
+                                //    nonblock_opacity: .1
+                                //},
+                                styling: 'bootstrap3',
+                            });
+                        }
+                        else {
+                            swal("Error!", data.message, "error");
+                        }
+                    }
+                }
+                if ($("form").attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false,
+                        ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+                return false;
+            }
+
+        });
+
+        $("#btnSave").click(function () {
+
+            var IssuedID= @Request.QueryString["Issued_ID"];
+            $("#IssuedID").val(IssuedID);
+
+            var oForm = document.forms["myForm"];
+            if ($("#myForm").valid()) {  //<<< I was missing this check
+                var table = $("#myTable").DataTable();
+                var a = $('#Inventory_No option:selected').text();
+                var ajaxConfig = {
+                    type: "POST",
+                    url: oForm.action + "?IssuedID=" + IssuedID + "&Inventory_No=" + $("#Inventory_No").val()
+                        + "&Inventory_No=" + $("#Inventory_No").val() + "&Issued_From=" + $("#Issued_From").val() + "&Issue_Type=" + $("#Issue_Type").val() +
+                        "&Description=" + $("#Description").val() + "&Status=" + $("#Issue_Type").val(),
+                    data: {},
+                    //data: {
+                    //    IssuedID: IssuedID,
+                    //    Inventory_No: $("#Inventory_No").val(),
+                    //    Inventory_No: $("#Inventory_No").val(),
+                    //    Comments: $("#Comments").val(),
+                    //    Issued_From: $("#Issued_From").val(),
+                    //    Issue_Type: $("#Issue_Type").val(),
+                    //    Status: $("#Status").val()
+                    //},
+                    success: function (data) {
+                        //
+                        if (data.success) {
+                            $('#DepartmentModal').modal('hide');
+                            if (oForm["Issue_Type"].value == "1") {
+                                var rowIndex = table.row.add([a, oForm["Inventory_No"].value, oForm["Issued_From"].value, '<label class="badge bg-success">Permanent</label>', '<label class="badge bg-success">Issued</label>', '<button onclick="ReturnSalesDetailsById(this.id)" id="' + data.id + '" class="btn  btn-outline-primary">Return</button> <button onclick="GetSalesDetailsById(this.id)" id="' + data.id + '" class="btn btn-success">Edit</button> <button id="' + data.id + '" class="btn btn-danger" onclick="DeleteSalesDetailsById(id)">Delete</button>']).draw(false);
+                            }
+                            if (oForm["Issue_Type"].value == "0") {
+                                var rowIndex = table.row.add([a, oForm["Inventory_No"].value, oForm["Issued_From"].value, '<label class="badge bg-warning">Templorary</label>', '<label class="badge bg-success">Issued</label>', '<button onclick="ReturnSalesDetailsById(this.id)" id="' + data.id + '" class="btn  btn-outline-primary">Return</button> <button onclick="GetSalesDetailsById(this.id)" id="' + data.id + '" class="btn btn-success">Edit</button> <button id="' + data.id + '" class="btn btn-danger" onclick="DeleteSalesDetailsById(id)">Delete</button>']).draw(false);
+                            }
+
+                            var row = $('#myTable').dataTable().fnGetNodes(rowIndex);
+                            $(row).attr('id', data.id);
+
+                            $('.ui-pnotify').remove();
+                            new PNotify({
+                                title: 'SUCCESS!',
+                                text: data.message,
+                                type: 'success',
+                                animation: 'slide',
+                                delay: 3000,
+                                top: "500px",
+                                min_height: "16px",
+                                animate_speed: 400,
+                                text_escape: true,
+                                //nonblock: {
+                                //    nonblock: true,
+                                //    nonblock_opacity: .1
+                                //},
+                                styling: 'bootstrap3',
+                            });
+                        }
+                        else {
+                            swal("Error!", data.message, "error");
+                        }
+                    }
+                }
+                if ($("form").attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false,
+                        ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+                return false;
+            }
+        });
+
+        $("#btnReturn").click(function () {
+            var IssuedID = @Request.QueryString["Issued_ID"];
+
+            var oForm = document.forms["receivedForm"];
+            if ($("#receivedForm").valid()) {  //<<< I was missing this check
+
+
+                var ajaxConfig = {
+                    type: "POST",
+                    url: oForm.action + "?IssueID=" + IssuedID + "&InventNo=" + $("#InventroyNo").val() + "&Comments=" + $("#Comments").val() ,
+                    data: {},
+                    success: function (data) {
+
+                        var table = $("#myTable").DataTable();
+
+                        $('#receivedMpdal').modal('hide');
+
+                        index = table.row('#' + oForm["InventroyNo"].value); //1234126
+                        var temp = table.row(index[0]).data();
+
+                        temp[4] = '<label class="badge bg-warning">Returned</label>';
+                        temp[5] = '<button disabled class="btn btn-outline-primary">Return</button> <button disabled class="btn btn-success">Edit</button> <button disabled class="btn btn-danger">Delete</button>';
+
+                        table.row(index[0]).data(temp).draw();
+
+
+                        $('.ui-pnotify').remove();
+                        new PNotify({
+                            title: 'SUCCESS!',
+                            text: data.message,
+                            type: 'success',
+                            animation: 'slide',
+                            delay: 3000,
+                            top: "500px",
+                            min_height: "16px",
+                            animate_speed: 400,
+                            text_escape: true,
+                            //nonblock: {
+                            //    nonblock: true,
+                            //    nonblock_opacity: .1
+                            //},
+                            styling: 'bootstrap3',
+                        });
+                    }
+                }
+                if ($("form").attr('enctype') == "multipart/form-data") {
+                    ajaxConfig["contentType"] = false,
+                        ajaxConfig["processData"] = false;
+                }
+                $.ajax(ajaxConfig);
+                return false;
+            }
+        });
+
+
+        function resetDatafromFrom() {
+            var IssuedID= @Request.QueryString["Issued_ID"];
+
+            // $("#ImagePreview").attr('src', '/AdminAssets/dist/img/avatar5.png');//e.target.result);
+            //$("#Department_ID").prop('readonly', false);
+            //$('select#Inventory_No').val("").trigger('change');
+            $("#myForm")[0].reset();
+            $("#IssuedID").val(IssuedID);
+            $(".form-control.is-invalid").removeClass('is-invalid');
+        }
+
+
+        $(document).ready(function () {
+
+
+            $("#btnUpdate").hide();
+            $('#myForm').validate({
+                rules: {
+                    //Name: {
+                    //    required: true,
+                    //},
+                    //Email: {
+                    //    required: true,
+                    //    Email: true,
+                    //},
+                    //password: {
+                    //    required: true,
+                    //    minlength: 5
+                    //},
+                    //terms: {
+                    //    required: true
+                    //},
+                },
+                messages: {
+                    Emp_ID: {
+                        required: "Please Enter Employee ID"
+                    },
+                    Dept_ID: {
+                        required: "Select Department"
+                    },
+                    Name: {
+                        required: "Please Enter Employee Name"
+                    },
+                    Email: {
+                        required: "Please Enter Employee Email",
+                        Email: "Please Enter a Vaild Email Address"
+                    },
+
+                    //password: {
+                    //    required: "Please provide a password",
+                    //    minlength: "Your password must be at least 5 characters long"
+                    //},
+                    //terms: "Please accept our terms"
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+
+            $('#receivedForm').validate({
+                rules: {
+                    //Name: {
+                    //    required: true,
+                    //},
+                    //Email: {
+                    //    required: true,
+                    //    Email: true,
+                    //},
+                    //password: {
+                    //    required: true,
+                    //    minlength: 5
+                    //},
+                    //terms: {
+                    //    required: true
+                    //},
+                },
+                messages: {
+                    Emp_ID: {
+                        required: "Please Enter Employee ID"
+                    },
+                    Dept_ID: {
+                        required: "Select Department"
+                    },
+                    Name: {
+                        required: "Please Enter Employee Name"
+                    },
+                    Email: {
+                        required: "Please Enter Employee Email",
+                        Email: "Please Enter a Vaild Email Address"
+                    },
+
+                    //password: {
+                    //    required: "Please provide a password",
+                    //    minlength: "Your password must be at least 5 characters long"
+                    //},
+                    //terms: "Please accept our terms"
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+
+
+        $(function () {
+            $("#myTable").DataTable({
+                //"paging": false,
+                //searching: false,                   // for disable search box
+                select: {
+                    info: false
+                },
+
+                //"order": [0, "asc"],
+                // "orderable": false,
+                "columnDefs": [
+                   { "targets": [4], "orderable": false }
+                ],
+                dom: 'lBfrtip',
+                language: {
+                    search: "", // for hide label of search
+                    searchPlaceholder: "Search Department", // place holder of search box
+                },
+                responsive: true,
+                //select: 'single',
+                //select: true,                       // for Select Row
+                //bDestroy: true,                     // this will disable table when new load data
+                "bLengthChange": false,           //  for Show more Entries
+                //scrollY: '20vh',
+                "sScrollX": "100%",
+                "sScrollXInner": "100%",
+                "bScrollCollapse": true,
+                "processing": true,
+                //"bPaginate": false,
+                "sPaginationType": "full_numbers",
+                //"langauge": {
+                //    "QueryTable": "No data found, Please click on <b>Add New </b> Button"
+                //},
+                "oLanguage": {
+                    "sEmptyTable": "No data found, Please click on <b>Add New</b> Button"
+                }
+            });
+
+            $('input[type="search"]').addClass('form-control'); // <-- add this line
+
+            //$("#myTable").DataTable({
+            //    "responsive": true,
+            //    "autoWidth": false,
+            //});
+
+            //$('#example2').DataTable({
+            //    "paging": true,
+            //    "lengthChange": false,
+            //    "searching": false,
+            //    "ordering": true,
+            //    "info": true,
+            //    "autoWidth": false,
+            //    "responsive": true,
+            //});
+        });
+
+    </script>
+
+
+
+}
+
+
+

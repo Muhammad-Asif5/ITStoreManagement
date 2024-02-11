@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- begin::Head -->
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Flex | Student
+    </title>
+    <meta name="description" content="Latest updates and statistic charts">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--begin::Web font -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Montserrat:300,400,500,600,700", "Roboto:300,400,500,600,700"] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <!--end::Web font -->
+    <!--begin::Base Styles -->
+    <!--begin::Page Vendors -->
+    <link href="line-awesome/css/line-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="Content/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Page Vendors -->
+    <link href="Content/vendors.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="Content/style.bundle.css" rel="stylesheet" type="text/css" />
+    <!--end::Base Styles -->
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link href="Content/CustomCss.css" rel="stylesheet" />
+    <script src="script/vendors.bundle.js" type="text/javascript"></script>
+</head>
+<!-- end::Head -->
+<!-- end::Body -->
+<body class="m-page--fluid m--skin- m-content--skin-light2 m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+    <!-- begin:: Page -->
+    <div class="m-grid m-grid--hor m-grid--root m-page">
+        <!-- BEGIN: Header -->
+        <header class="m-grid__item m-header" data-minimize-offset="200" data-minimize-mobile-offset="200">
+            <div class="m-container m-container--fluid m-container--full-height">
+                <div class="m-stack m-stack--ver m-stack--desktop">
+                    <!-- BEGIN: Brand -->
+                    <div class="m-stack__item m-brand  m-brand--skin-dark ">
+                        <div class="m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-stack__item--middle m-stack__item--center m-brand__logo">
+                                <a href="/Home" class="m-brand__logo-wrapper">
+                                    <img class="img-responsive" src="flex-header.png" alt="" />
+                                </a>
+                            </div>
+                            <div class="m-stack__item m-stack__item--middle m-brand__tools">
+                                <!-- BEGIN: Responsive Aside Left Menu Toggler -->
+                                <div id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">
+                                    <span></span>
+                                </div>
+                                <!-- END -->
+                                <!-- BEGIN: Responsive Header Menu Toggler -->
+                                
+                                <!-- END -->
+                                <!-- BEGIN: Topbar Toggler -->
+                                <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+                                    <i class="flaticon-more"></i>
+                                </a>
+                                <!-- BEGIN: Topbar Toggler -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END: Brand -->
+                    <div class="m-stack__item m-stack__item--fluid m-header-head" id="m_header_nav">
+                        <!-- BEGIN: Topbar -->
+                        <div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
+                            <div class="m-stack__item m-topbar__nav-wrapper">
+                                <ul class="m-topbar__nav m-nav m-nav--inline">
+
+                                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img m-dropdown m-dropdown--medium m-dropdown--arrow m-dropdown--header-bg-fill m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" data-dropdown-toggle="click">
+                                        <a href="#" class="m-nav__link m-dropdown__toggle">
+                                                    <span class="m-topbar__welcome m--hidden-tablet m--hidden-mobile">
+                                                        Hello Mr,&nbsp;
+                                                    </span>
+                                                <span class="m-topbar__username m--hidden-tablet m--hidden-mobile m--padding-right-15">
+                                                    <span class="m-link">
+                                                        Slah Ud Din
+                                                    </span>
+                                                </span>
+                                                <span class="m-topbar__userpic">
+                                                        <img src="img/show?arn=1625468" />
+                                                </span>
+                                        </a>
+                                        <div class="m-dropdown__wrapper">
+                                            <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                            <div class="m-dropdown__inner">
+                                                <div class="m-dropdown__header m--align-center">
+                                                    <div class="m-card-user m-card-user--skin-dark">
+                                                        <div class="m-card-user__pic">
+                                                                <img src="img/show?arn=1625468" />
+                                                        </div>
+                                                        <div class="m-card-user__details">
+                                                            <span class="m-card-user__name m--font-weight-500">
+                                                                Slah Ud Din
+                                                            </span>
+                                                            <a class="m-card-user__email m--font-weight-300 m-link">
+                                                                slahuddin55@yahoo.com
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-dropdown__body">
+                                                    <div class="m-dropdown__content">
+                                                        <ul class="m-nav m-nav--skin-light">
+                                                            <li class="m-nav__item">
+                                                                <a href="/" class="m-nav__link">
+                                                                    <i class="m-nav__link-icon flaticon-profile"></i>
+                                                                    <span class="m-nav__link-title">
+                                                                        <span class="m-nav__link-wrap">
+                                                                            <span class="m-nav__link-text">
+                                                                                My Profile
+                                                                            </span>
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+
+                                                            <li class="m-nav__item">
+                                                                <a href="/Student/ChangePassword" class="m-nav__link">
+                                                                    <i class="m-nav__link-icon flaticon-lock"></i>
+                                                                    <span class="m-nav__link-text">
+                                                                        Change Password
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="m-nav__separator m-nav__separator--fit"></li>
+                                                            <li class="m-nav__item text-center">
+                                                                <a href="/Login/logout" class="btn btn-brand m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                                                    <span>
+                                                                        <i class="la la-power-off"></i>
+                                                                        <span>
+                                                                            Logout
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- END: Topbar -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- END: Header -->
+        <!-- begin::Body -->
+        <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-body">
+            <!-- BEGIN: Left Aside -->
+            <button class="m-aside-left-close m-aside-left-close--skin-dark" id="m_aside_left_close_btn">
+                <i class="la la-close"></i>
+            </button>
+            <div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark">
+                <!-- BEGIN: Aside Menu -->
+                <div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark m-aside-menu--dropdown " ata-menu-vertical="true" data-menu-dropdown="true" data-menu-scrollable="true" data-menu-dropdown-timeout="500">
+                    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+                            <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true">
+                                <a href="Index.html" class="m-menu__link ">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon la la-home"></i>
+                                    <span class="m-menu__link-text">
+                                        Home
+                                    </span>
+                                </a>
+                            </li>
+                                                    <li class="m-menu__item  m-menu__item--active" aria-haspopup="true">
+                                <a href="CourseRegistration.html" class="m-menu__link m-menu__toggle">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon la la-file-text"></i>
+                                    <span class="m-menu__link-text">
+                                        Course Registration
+                                    </span>
+                                </a>
+                            </li>
+                                                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true">
+                                <a href="/Student/Attendance" class="m-menu__link m-menu__toggle">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon flaticon-list-2"></i>
+                                    <span class="m-menu__link-text">
+                                        Attendance
+                                    </span>
+                                </a>
+                            </li>
+                                                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-redirect="true">
+                                <a href="/Student/Marks" class="m-menu__link m-menu__toggle">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon flaticon-edit-1"></i>
+                                    <span class="m-menu__link-text">
+                                        Marks
+                                    </span>
+                                </a>
+                            </li>
+                                                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-redirect="true">
+                                <a href="/Student/Transcript" class="m-menu__link m-menu__toggle">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon flaticon-folder-1"></i>
+                                    <span class="m-menu__link-text">
+                                        Transcript
+                                    </span>
+                                </a>
+                            </li>
+                                                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-redirect="true">
+                                <a href="/Student/Challan" class="m-menu__link m-menu__toggle">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon flaticon-coins"></i>
+                                    <span class="m-menu__link-text">
+                                        Fee Challan
+                                    </span>
+                                </a>
+                            </li>
+                                                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-redirect="true">
+                                <a href="/Student/CourseFeedback" class="m-menu__link m-menu__toggle">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon flaticon-file"></i>
+                                    <span class="m-menu__link-text">
+                                        Course Feedback
+                                    </span>
+                                </a>
+                            </li>
+                                                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" data-redirect="true">
+                                <a href="/Student/TentativeStudyPlan" class="m-menu__link m-menu__toggle">
+                                    <span class="m-menu__item-here"></span>
+                                    <i class="m-menu__link-icon flaticon-time"></i>
+                                    <span class="m-menu__link-text">
+                                        Tentative Study Plan
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+                <!-- END: Aside Menu -->
+            </div>
+            <!-- END: Left Aside -->
+
+            <div class="m-grid__item m-grid__item--fluid m-wrapper">
+                <div class="m-subheader ">
+                    <div class="d-flex align-items-center">
+                        <div class="mr-auto">
+                            <h3 class="m-subheader__title m-subheader__title--separator">
+                                Course Registration
+                            </h3>
+                            <label>  
+
+        <a href="/" title="Home">Home</a>
+         &gt; 
+
+    Course Registration
+</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="m-content">
+                    
+
+<div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--border-bottom-brand m-portlet--head-sm">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Student Information
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div class="m-portlet__body">
+        <div class="row">
+            <div class="col-md-4">
+                <p><span class="m--font-boldest">Section: </span><span>CS-F</span></p>
+                <p><span class="m--font-boldest">Credits Attempted: </span><span>82</span></p>
+                <p><span class="m--font-boldest">Credits Earned: </span><span>67</span></p>
+            </div>
+            <div class="col-md-4">
+                <p><span class="m--font-boldest">CGPA: </span><span>2.83</span></p>
+                <p><span class="m--font-boldest">Status: </span><span>Current</span></p>
+                <p><span class="m--font-boldest">Warning Count: </span><span>0</span></p>
+            </div>
+            <div class="col-md-4">
+                <p><span class="m--font-boldest">Credit Limit for Semester:  </span><span>19</span></p>
+                <p><span class="m--font-boldest">Semester: </span><span>Fall 2018</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-warning-2"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>
+                Sorry!
+            </strong>
+            Some Problem Occured. Kindly contact Acedemic office.
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+<form action="/Student/RegisterCourses" id="CourseReg" method="post">        <div class="m-portlet m-portlet--brand m-portlet--head-solid-bg m-portlet--border-bottom-brand m-portlet--head-sm">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Course Registration
+                        </h3>
+                    </div>
+                </div>
+                        <div class="m-portlet__head-tools">
+                            <ul class="m-portlet__nav">
+                                <li class="m-portlet__nav-item">
+                                    <button id="submit" type="submit" class="btn m-btn--wide btn-light m-btn m-btn--icon">
+                                        Register Courses
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+            </div>
+            <div class="m-portlet__body">
+                <!--begin::Section-->
+                <div class="m-section">
+                    <div class="m-section__content">
+                        <table id="CourseRegistrationtbl" class="table table-responsive m-table m-table--border-info m-table--head-bg-info">
+                            <thead>
+                                <tr>
+                                    <th>Sr.#</th>
+                                    <th>Course Name</th>
+                                    <th>Cr.Hrs</th>
+                                    <th>Relation</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                    <th>Section</th>
+                                            <th>Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                                    <tr class="m-table__row--light">
+                                                                        
+                                                                        <th>1</th>
+
+                                                                        <td name="CourseId" id="3">Computer Programming Lab</td>
+                                                                        <td class="text-center crdthrs">1</td>
+                                                                            <td id="C" class="text-center">Core</td>
+                                                                        <td>Register! 8-Improvement Course (Can take)</td>
+                                                                                <td>Not Registered</td>
+                                                                                <td>
+                                                                                        <select name="section" class="btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="3">
+                                                                                                            <option id="13201830498"> AF01C</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td data-field="Register" class="m-datatable__cell text-center">
+                                                                                    
+                                                                                    <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                                                                        <input class="RegisterChkbox" name="RegisterChkbox" type="checkbox">
+                                                                                        Register
+                                                                                        <span></span>
+                                                                                    </label>
+
+                                                                                </td>
+                                                                    </tr>
+                                            <tr class="m-table__row--success">
+                                                
+                                                <th>2</th>
+
+                                                <td name="CourseId" id="20">Computer Networks Lab</td>
+                                                <td class="text-center crdthrs">1</td>
+                                                    <td id="C" class="text-center">Core</td>
+                                                <td>Register! 5-New Offered Course &lt;New&gt; (Recommended)</td>
+                                                        <td>Registered</td>
+                                                            <td>
+                                                                    <select name="section" class="d-inline-block btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="20">
+                                                                                        <option id="13201830317">CS05A</option>
+                                                                                    <option id="13201830347" selected="selected">CS05F</option>
+                                                                                        <option id="13201830323">CS05B</option>
+                                                                    </select>
+                                                            </td>
+                                                            <td data-field="Register" class="m-datatable__cell text-center ">
+                                                                <div class="btn-group m-btn-group" role="group">
+                                                                    <button class="btn btn-sm m-btn--square btn-brand update" type="submit" name="update" value="13201830347_20">Update</button>
+                                                                    <button class="btn btn-sm m-btn--square btn-brand drop" type="submit" name="drop" value="13201830347_20">Drop</button>
+                                                                </div>
+
+                                                            </td>
+
+                                            </tr>
+                                            <tr class="m-table__row--success">
+                                                
+                                                <th>3</th>
+
+                                                <td name="CourseId" id="21">Object Oriented Analysis and Design Lab</td>
+                                                <td class="text-center crdthrs">1</td>
+                                                    <td id="C" class="text-center">Core</td>
+                                                <td>Register! 5-New Offered Course &lt;New&gt; (Recommended)</td>
+                                                        <td>Registered</td>
+                                                            <td>
+                                                                    <select name="section" class="d-inline-block btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="21">
+                                                                                        <option id="13201830319">CS05A</option>
+                                                                                    <option id="13201830349" selected="selected">CS05F</option>
+                                                                                        <option id="13201830325">CS05B</option>
+                                                                    </select>
+                                                            </td>
+                                                            <td data-field="Register" class="m-datatable__cell text-center ">
+                                                                <div class="btn-group m-btn-group" role="group">
+                                                                    <button class="btn btn-sm m-btn--square btn-brand update" type="submit" name="update" value="13201830349_21">Update</button>
+                                                                    <button class="btn btn-sm m-btn--square btn-brand drop" type="submit" name="drop" value="13201830349_21">Drop</button>
+                                                                </div>
+
+                                                            </td>
+
+                                            </tr>
+                                                        <tr class="m-table__row--danger">
+                                                            
+                                                            <th>4</th>
+
+                                                            <td name="CourseId" id="33">Computer Programming</td>
+                                                            <td class="text-center crdthrs">3</td>
+                                                                <td id="C" class="text-center">Core</td>
+                                                            <td>It is Pre-Req of already Passed Course!</td>
+                                                                <td></td>
+                                                            <td></td>
+                                                                    <td></td>
+                                                        </tr>
+                                            <tr class="m-table__row--success">
+                                                
+                                                <th>5</th>
+
+                                                <td name="CourseId" id="63">Theory of Automata</td>
+                                                <td class="text-center crdthrs">3</td>
+                                                    <td id="C" class="text-center">Core</td>
+                                                <td>Register! 5-New Offered Course &lt;New&gt; (Recommended)</td>
+                                                        <td>Registered</td>
+                                                            <td>
+                                                                    <select name="section" class="d-inline-block btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="63">
+                                                                                        <option id="13201830321">CS05A</option>
+                                                                                    <option id="13201830351" selected="selected">CS05F</option>
+                                                                                        <option id="13201830327">CS05B</option>
+                                                                    </select>
+                                                            </td>
+                                                            <td data-field="Register" class="m-datatable__cell text-center ">
+                                                                <div class="btn-group m-btn-group" role="group">
+                                                                    <button class="btn btn-sm m-btn--square btn-brand update" type="submit" name="update" value="13201830351_63">Update</button>
+                                                                    <button class="btn btn-sm m-btn--square btn-brand drop" type="submit" name="drop" value="13201830351_63">Drop</button>
+                                                                </div>
+
+                                                            </td>
+
+                                            </tr>
+                                            <tr class="m-table__row--success">
+                                                
+                                                <th>6</th>
+
+                                                <td name="CourseId" id="69">Computer Networks</td>
+                                                <td class="text-center crdthrs">3</td>
+                                                    <td id="C" class="text-center">Core</td>
+                                                <td>Register! 5-New Offered Course &lt;New&gt; (Recommended)</td>
+                                                        <td>Registered</td>
+                                                            <td>
+                                                                    <select name="section" class="d-inline-block btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="69">
+                                                                                        <option id="13201830316">CS05A</option>
+                                                                                    <option id="13201830346" selected="selected">CS05F</option>
+                                                                                        <option id="13201830322">CS05B</option>
+                                                                    </select>
+                                                            </td>
+                                                            <td data-field="Register" class="m-datatable__cell text-center ">
+                                                                <div class="btn-group m-btn-group" role="group">
+                                                                    <button class="btn btn-sm m-btn--square btn-brand update" type="submit" name="update" value="13201830346_69">Update</button>
+                                                                    <button class="btn btn-sm m-btn--square btn-brand drop" type="submit" name="drop" value="13201830346_69">Drop</button>
+                                                                </div>
+
+                                                            </td>
+
+                                            </tr>
+                                            <tr class="m-table__row--success">
+                                                
+                                                <th>7</th>
+
+                                                <td name="CourseId" id="71">Object Oriented Analysis and Design</td>
+                                                <td class="text-center crdthrs">3</td>
+                                                    <td id="C" class="text-center">Core</td>
+                                                <td>Register! 5-New Offered Course &lt;New&gt; (Recommended)</td>
+                                                        <td>Registered</td>
+                                                            <td>
+                                                                    <select name="section" class="d-inline-block btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="71">
+                                                                                        <option id="13201830318">CS05A</option>
+                                                                                    <option id="13201830348" selected="selected">CS05F</option>
+                                                                                        <option id="13201830324">CS05B</option>
+                                                                    </select>
+                                                            </td>
+                                                            <td data-field="Register" class="m-datatable__cell text-center ">
+                                                                <div class="btn-group m-btn-group" role="group">
+                                                                    <button class="btn btn-sm m-btn--square btn-brand update" type="submit" name="update" value="13201830348_71">Update</button>
+                                                                    <button class="btn btn-sm m-btn--square btn-brand drop" type="submit" name="drop" value="13201830348_71">Drop</button>
+                                                                </div>
+
+                                                            </td>
+
+                                            </tr>
+                                                                    <tr class="m-table__row--light">
+                                                                        
+                                                                        <th>8</th>
+
+                                                                        <td name="CourseId" id="121">Advanced Programming</td>
+                                                                        <td class="text-center crdthrs">3</td>
+                                                                            <td id="E" class="text-center">Elective</td>
+                                                                        <td>Register! 6-New Offered Course &lt;New&gt; (Can take)</td>
+                                                                                <td>Not Registered</td>
+                                                                                <td>
+                                                                                        <select name="section" class="btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="121">
+                                                                                                        <option selected="selected" disabled="disabled"> Not Available </option>
+                                                                                                        <option selected="selected" disabled="disabled"> Not Available </option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td data-field="Register" class="m-datatable__cell text-center">
+                                                                                    
+                                                                                    <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                                                                        <input class="RegisterChkbox" name="RegisterChkbox" type="checkbox">
+                                                                                        Register
+                                                                                        <span></span>
+                                                                                    </label>
+
+                                                                                </td>
+                                                                    </tr>
+                                                                    <tr class="m-table__row--light">
+                                                                        
+                                                                        <th>9</th>
+
+                                                                        <td name="CourseId" id="167">Bio-Informatics</td>
+                                                                        <td class="text-center crdthrs">3</td>
+                                                                            <td id="E" class="text-center">Elective</td>
+                                                                        <td>Register! 6-New Offered Course &lt;New&gt; (Can take)</td>
+                                                                                <td>Not Registered</td>
+                                                                                <td>
+                                                                                        <select name="section" class="btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="167">
+                                                                                                            <option id="13201830494">CS03Y</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td data-field="Register" class="m-datatable__cell text-center">
+                                                                                    
+                                                                                    <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                                                                        <input class="RegisterChkbox" name="RegisterChkbox" type="checkbox">
+                                                                                        Register
+                                                                                        <span></span>
+                                                                                    </label>
+
+                                                                                </td>
+                                                                    </tr>
+                                                                    <tr class="m-table__row--light">
+                                                                        
+                                                                        <th>10</th>
+
+                                                                        <td name="CourseId" id="478">Digital Image Processing</td>
+                                                                        <td class="text-center crdthrs">3</td>
+                                                                            <td id="E" class="text-center">Elective</td>
+                                                                        <td>Register! 6-New Offered Course &lt;New&gt; (Can take)</td>
+                                                                                <td>Not Registered</td>
+                                                                                <td>
+                                                                                        <select name="section" class="btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="478">
+                                                                                                            <option id="13201830424">CS05A</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td data-field="Register" class="m-datatable__cell text-center">
+                                                                                    
+                                                                                    <label class="m-checkbox m-checkbox--bold m-checkbox--state-success">
+                                                                                        <input class="RegisterChkbox" name="RegisterChkbox" type="checkbox">
+                                                                                        Register
+                                                                                        <span></span>
+                                                                                    </label>
+
+                                                                                </td>
+                                                                    </tr>
+                                            <tr class="m-table__row--success">
+                                                
+                                                <th>11</th>
+
+                                                <td name="CourseId" id="915">Probability and Statistics</td>
+                                                <td class="text-center crdthrs">4</td>
+                                                    <td id="C" class="text-center">Core</td>
+                                                <td>Register! 5-New Offered Course &lt;New&gt; (Recommended)</td>
+                                                        <td>Registered</td>
+                                                            <td>
+                                                                    <select name="section" class="d-inline-block btn btn-sm btn-brand dropdown-toggle dropdown-toggle-split section" id="915">
+                                                                                        <option id="13201830320">CS05A</option>
+                                                                                    <option id="13201830350" selected="selected">CS05F</option>
+                                                                                        <option id="13201830344">CS05E</option>
+                                                                                        <option id="13201830338">CS05D</option>
+                                                                                        <option id="13201830332">CS05C</option>
+                                                                                        <option id="13201830326">CS05B</option>
+                                                                    </select>
+                                                            </td>
+                                                            <td data-field="Register" class="m-datatable__cell text-center ">
+                                                                <div class="btn-group m-btn-group" role="group">
+                                                                    <button class="btn btn-sm m-btn--square btn-brand update" type="submit" name="update" value="13201830350_915">Update</button>
+                                                                    <button class="btn btn-sm m-btn--square btn-brand drop" type="submit" name="drop" value="13201830350_915">Drop</button>
+                                                                </div>
+
+                                                            </td>
+
+                                            </tr>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <!--end::Section-->
+            </div>
+            <!--end::Form-->
+        </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $('.RegisterChkbox').change(function () {
+            var sectionid = $(this).parent('label').parent('td').parent('tr').find('.section').find('option:selected').attr('id');
+            $(this).attr("Value", sectionid);
+        });
+        $(".section").on('change', function () {
+            var sectionid = $(this).find('option:selected').attr('id');
+            var courseid = $(this).attr('id');
+            var offerid = sectionid.concat('_');
+            offerid = offerid.concat(courseid);
+
+            $(this).parent("td").parent("tr").find(".update").attr("Value", offerid);
+            $(this).parent("td").parent("tr").find(".drop").attr("Value", offerid);
+            //$(".RegisterChkbox").attr("Value", sectionid);
+            //$("#update").attr("Value", offerid);
+            //$("#drop").attr("Value", offerid);
+        });
+        $("#CourseRegistrationtbl").find(".RegisterChkbox").each(function () {
+            if ($(this).prop('checked') == true) {
+                var crdts = $(this).parent('label').parent('td').parent('tr').find('#crdthrs').value;
+            }
+        });
+    });
+</script>
+
+                </div>
+            </div>
+        </div>
+        <!-- end:: Body -->
+        <!-- begin::Footer -->
+        <footer class="m-grid__item m-footer ">
+            <div class="m-container m-container--fluid m-container--full-height m-page__container">
+                <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
+                    <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
+                        <span class="m-footer__copyright">
+                            2018 &copy; All rights reserved
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end::Footer -->
+    </div>
+    <!-- end:: Page -->
+    <!-- begin::Scroll Top -->
+    <div class="m-scroll-top m-scroll-top--skin-top" data-toggle="m-scroll-top" data-scroll-offset="500" data-scroll-speed="300">
+        <i class="la la-arrow-up"></i>
+    </div>
+    <!-- end::Scroll Top -->
+    <!-- begin::Quick Nav -->
+    <!-- begin::Quick Nav -->
+    <!--begin::Base Scripts -->
+
+    <script src="script/scripts.bundle.js" type="text/javascript"></script>
+    <!--end::Base Scripts -->
+    <!--begin::Page Vendors -->
+    <script src="script/fullcalendar.bundle.js" type="text/javascript"></script>
+    <!--end::Page Vendors -->
+    <!--begin::Page Snippets -->
+    <script src="script/script/bootstrap-notify.js" type="text/javascript"></script>
+    <!--end::Page Snippets -->
+</body>
+<!-- end::Body -->
+</html>
