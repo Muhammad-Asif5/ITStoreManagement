@@ -1791,11 +1791,7 @@
     <Content Include="images\edit.png" />
     <Content Include="images\signup-bg.jpg" />
     <Content Include="js\main.js" />
-    <Content Include="Logo\fast.png" />
-    <Content Include="Logo\FASTlogo.jpg" />
-    <Content Include="Logo\logo.png" />
-    <Content Include="Logo\NU-logo.jpg" />
-    <Content Include="Logo\nu.png" />
+    <Content Include="Logo\VST.png" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
